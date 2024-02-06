@@ -1,23 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/frontend/assets/favicon.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link type="text/css" rel="stylesheet" href="/frontend/index.css" />
-  <title>Vite App</title>
-</head>
-<body>
-<div id="root"></div>
-<script type="module">
-  /**
-   * @dfinity/agent requires this. Can be removed once it's fixed
-   */
-  import { Buffer } from "buffer"
+<html lang="es">
 
-  window.global = window
-  window.Buffer = Buffer
-</script>
-<script type="module" src="/frontend/main.jsx"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Temperatura en el Bosque</title>
+    <style>
+        body {
+            background: url('b.jpg') fixed; /* Reemplaza 'tu-fondo.gif' con la ruta de tu archivo GIF */
+            background-size: cover;
+            color: #3e2723;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #4e342e;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h3,
+        h4,
+        h5 {
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+            text-align: center;
+            color: #4e342e;
+        }
+
+        #temperatureContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #temperatureLeft,
+        #temperatureRight {
+            width: 48%; /* Ajusta el ancho según tu preferencia */
+            padding: 10px;
+            border: 1px solid #3e2723;
+            box-sizing: border-box;
+            background-color: #a5d6a7;
+            border-radius: 8px;
+        }
+
+        #temperatureImage {
+            max-width: 100%;
+            max-height: 200px;
+            margin: 0 auto; /* Centra la imagen horizontalmente */
+            display: block; /* Elimina el espacio adicional por ser una etiqueta de línea */
+            margin-top: 10px;
+        }
+
+        .table-container {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+            color: #3e2723;
+        }
+
+        th,
+        td {
+            border: 1px solid #3e2723;
+            text-align: left;
+            padding: 12px;
+        }
+
+        th {
+            background-color: #795548;
+        }
+
+        #btnRegresar {
+            margin: 20px auto;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            background-color: #4caf50;
+            color: #ffffff;
+            transition: background-color 0.3s;
+        }
+
+        #btnRegresar:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Información de la Temperatura</h2>
+    <div id="temperatureContainer">
+        <div id="temperatureLeft">
+            <h3>Temperatura actual: <span id="temperatureDisplay">150°C</span></h3>
+        </div>
+        <div id="temperatureRight">
+            <h4 id="fireStatus">Estado: Sin señales de fuego</h4>
+        </div>
+    </div>
+
+    <h5>Datos de Temperatura</h5>
+    <div class="table-container">
+        <!-- Tabla existente aquí... -->
+    </div>
+
+    <button id="btnRegresar">Regresar</button>
+
+    <script>
+        const currentTemperature = 100;
+
+        document.getElementById("temperatureDisplay").innerText = currentTemperature + "°C";
+
+        // Cambiar la imagen dependiendo de la temperatura
+        var temperatureImage = document.getElementById("temperatureImage");
+        temperatureImage.src = getTemperatureImage(currentTemperature);
+
+        // Configuración del texto de estado
+        var fireStatus = "Sin señales de fuego";
+        if (currentTemperature > 80 && currentTemperature <= 120) {
+            fireStatus = "Es recomendable realizar una revisión";
+        } else if (currentTemperature > 120) {
+            fireStatus = "¡Fuego detectado!";
+        }
+
+        document.getElementById("fireStatus").innerText = "Estado: " + fireStatus;
+
+        document.getElementById('btnRegresar').onclick = function () {
+            window.location.href = 'inicio.html'; // Redirige a inicio.html
+        };
+
+
+        // Función para obtener la imagen de temperatura según el rango
+        function getTemperatureImage(temperature) {
+            if (temperature <= 80) {
+                return "verde.png"; // Ruta de la imagen verde
+            } else if (temperature <= 120) {
+                return "naranja.png"; // Ruta de la imagen naranja
+            } else {
+                return "rojo.png"; // Ruta de la imagen roja
+            }
+        }
+    </script>
 </body>
+
 </html>
